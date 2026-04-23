@@ -1,10 +1,6 @@
 # 🧭 Vastu Compass App
 
 <p align="center">
-  <img src="assets/screenshots/compass.png" width="250" alt="App Preview" />
-</p>
-
-<p align="center">
   A modern <b>Vastu Compass mobile app</b> built with React Native + Expo that provides real-time direction, degree, and Vastu guidance using device sensors.
 </p>
 
@@ -169,13 +165,6 @@ C:\Users\...
 * 🔐 Login system
 * 🎨 Advanced UI animations
 * 🏪 Play Store release
-
----
-
-## 🚀 Download APK
-
-👉 [Download Latest APK](#)
-(*Upload your APK and replace this link*)
 
 ---
 
