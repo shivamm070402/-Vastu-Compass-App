@@ -1,50 +1,206 @@
-# Welcome to your Expo app 👋
+# 🧭 Vastu Compass App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+<p align="center">
+  <img src="assets/screenshots/compass.png" width="250" alt="App Preview" />
+</p>
 
-## Get started
+<p align="center">
+  A modern <b>Vastu Compass mobile app</b> built with React Native + Expo that provides real-time direction, degree, and Vastu guidance using device sensors.
+</p>
 
-1. Install dependencies
+<p align="center">
+  <img src="https://img.shields.io/badge/React%20Native-0.7x-blue" />
+  <img src="https://img.shields.io/badge/Expo-SDK%2050-black" />
+  <img src="https://img.shields.io/badge/Platform-Android-green" />
+  <img src="https://img.shields.io/badge/License-MIT-yellow" />
+</p>
 
-   ```bash
-   npm install
-   ```
+---
 
-2. Start the app
+## ✨ Features
 
-   ```bash
-   npx expo start
-   ```
+* 🧭 Real-time compass using magnetometer
+* 🔄 Smooth animated rotation
+* 📍 Live GPS location (Latitude & Longitude)
+* 🏠 Vastu-based direction insights
+* 📱 Clean circular UI (production-style)
+* ⚡ Lightweight & optimized
 
-In the output, you'll find options to open the app in a
+---
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
-## Get a fresh project
+---
 
-When you're ready, run:
+## 🎥 Demo 
+
+<p align="center">
+  <img src="assets/screenshots/demo.gif" width="250" alt="Demo GIF"/>
+</p>
+
+---
+
+## 🛠️ Tech Stack
+
+* ⚛️ React Native
+* 🚀 Expo
+* 🧭 expo-sensors
+* 📍 expo-location
+* 🎞️ Animated API
+
+---
+
+## 📁 Project Structure
 
 ```bash
-npm run reset-project
+project-root/
+│
+├── app/
+│   └── (tabs)/
+│       └── index.tsx
+│
+├── assets/
+│   ├── images/
+│   │   ├── vastuapp.png
+│   │   └── needle.png
+│   │
+│   └── screenshots/
+│       ├── compass.png
+│       ├── home.png
+│       ├── location.png
+│       └── demo.gif
+│
+├── app.json
+├── eas.json
+└── package.json
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-## Learn more
+## ⚙️ Setup & Run
 
-To learn more about developing your project with Expo, look at the following resources:
+### 1️⃣ Clone Repo
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+git clone https://github.com/your-username/vastu-compass.git
+cd vastu-compass
+```
 
-## Join the community
+### 2️⃣ Install Dependencies
 
-Join our community of developers creating universal apps.
+```bash
+npm install
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### 3️⃣ Start App
+
+```bash
+npx expo start
+```
+
+👉 Scan QR using Expo Go
+
+---
+
+## 📦 Build APK (Universal)
+
+Using Expo Application Services (EAS):
+
+```bash
+npm install -g eas-cli
+eas login
+eas build:configure
+eas build -p android --profile preview
+```
+
+👉 Generates APK compatible with most Android devices
+
+---
+
+## ⚠️ Important Notes
+
+### ✅ Use Relative Paths for Assets
+
+```js
+require('../../assets/images/vastuapp.png')
+```
+
+❌ Avoid:
+
+```js
+C:\Users\...
+```
+
+---
+
+### 📡 Permissions Required
+
+* Location access
+* Sensor availability
+
+---
+
+### 📱 Compatibility
+
+* Android 5.0+ (minSdkVersion 21)
+* Works on ~95% devices
+
+---
+
+## 🧠 Vastu Logic
+
+| Direction | Meaning                 |
+| --------- | ----------------------- |
+| N         | Career, Growth 🚀       |
+| NE        | Wealth, Spirituality 💰 |
+| E         | Health, Energy 🌿       |
+| SE        | Fire, Kitchen 🔥        |
+| S         | Fame ⭐                  |
+| SW        | Stability 🏠            |
+| W         | Profit 💼               |
+| NW        | Networking 🤝           |
+
+---
+
+## 🔮 Future Improvements
+
+* 🌍 Map integration
+* 🎯 Compass calibration
+* 🔐 Login system
+* 🎨 Advanced UI animations
+* 🏪 Play Store release
+
+---
+
+## 🚀 Download APK
+
+👉 [Download Latest APK](#)
+(*Upload your APK and replace this link*)
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome!
+
+```bash
+fork → clone → branch → commit → PR 🚀
+```
+
+---
+
+## 👨‍💻 Author
+
+**Shivam Mohite**
+
+---
+
+## ⭐ Support
+
+If you like this project:
+
+👉 Give it a ⭐ on GitHub
+👉 Share with others
+
+---
+
