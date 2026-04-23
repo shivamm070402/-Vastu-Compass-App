@@ -35,7 +35,7 @@
 ## 🎥 Demo 
 
 <p align="center">
-  <img src="assets/screenshots/demo.gif" width="250" alt="Demo GIF"/>
+  <img src="assets/images/WhatsAppVideo2026-04-22at17.43.33-ezgif.com-video-to-gif-converter.gif" width="250" alt="Demo GIF"/>
 </p>
 
 ---
