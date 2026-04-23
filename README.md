@@ -8,7 +8,6 @@
   <img src="https://img.shields.io/badge/React%20Native-0.7x-blue" />
   <img src="https://img.shields.io/badge/Expo-SDK%2050-black" />
   <img src="https://img.shields.io/badge/Platform-Android-green" />
-  <img src="https://img.shields.io/badge/License-MIT-yellow" />
 </p>
 
 ---
