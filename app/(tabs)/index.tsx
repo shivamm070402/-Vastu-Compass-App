@@ -1,98 +1,201 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Animated
+} from 'react-native';
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import { Magnetometer } from 'expo-sensors';
+import * as Location from 'expo-location';
 
-export default function HomeScreen() {
+export default function App() {
+  const [heading, setHeading] = useState(0);
+  const [location, setLocation] = useState<any>(null);
+
+  const rotateAnim = useRef(new Animated.Value(0)).current;
+
+  // 🧭 Compass
+  useEffect(() => {
+    const sub = Magnetometer.addListener((data) => {
+      let angle = Math.atan2(data.y, data.x) * (180 / Math.PI);
+      if (angle < 0) angle += 360;
+
+      const rounded = Math.round(angle);
+      setHeading(rounded);
+
+      Animated.timing(rotateAnim, {
+        toValue: rounded,
+        duration: 150,
+        useNativeDriver: true,
+      }).start();
+    });
+
+    Magnetometer.setUpdateInterval(120);
+    return () => sub.remove();
+  }, []);
+
+  // 📍 Location
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') return;
+
+      let loc = await Location.getCurrentPositionAsync({});
+      setLocation(loc);
+    })();
+  }, []);
+
+  const rotate = rotateAnim.interpolate({
+    inputRange: [0, 360],
+    outputRange: ['0deg', '360deg'],
+  });
+
+  // 🏠 Vastu Logic
+  const getDirectionInfo = (deg: number) => {
+    if (deg >= 337.5 || deg < 22.5)
+      return { dir: 'N', text: 'Career, Opportunities, Growth 🚀 (Kubera)' };
+
+    if (deg < 67.5)
+      return { dir: 'NE', text: 'Wealth, Spirituality 💰 (Ishaan)' };
+
+    if (deg < 112.5)
+      return { dir: 'E', text: 'Health, Energy 🌿 (Indra)' };
+
+    if (deg < 157.5)
+      return { dir: 'SE', text: 'Fire, Kitchen 🔥 (Agni)' };
+
+    if (deg < 202.5)
+      return { dir: 'S', text: 'Fame, Strength ⭐ (Yama)' };
+
+    if (deg < 247.5)
+      return { dir: 'SW', text: 'Stability, Property 🏠 (Nairitya)' };
+
+    if (deg < 292.5)
+      return { dir: 'W', text: 'Profit, Gains 💼 (Varuna)' };
+
+    return { dir: 'NW', text: 'Support, Networking 🤝 (Vayu)' };
+  };
+
+  const info = getDirectionInfo(heading);
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+    <View style={styles.container}>
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+      {/* 🧭 CIRCULAR COMPASS */}
+      <View style={styles.card}>
+
+        {/* ✅ FIXED: Relative path */}
+        <Animated.Image
+          source={require('../../assets/images/vastuapp.png')}
+          style={[
+            styles.compass,
+            { transform: [{ rotate }] }
+          ]}
+        />
+
+        {/* ✅ FIXED: Relative path */}
+        <Animated.Image
+          source={require('../../assets/images/needle.png')}
+          style={[
+            styles.needle,
+            { transform: [{ rotate }] }
+          ]}
+        />
+
+        {/* Center Dot */}
+        <View style={styles.centerDot} />
+
+      </View>
+
+      {/* 📊 INFO */}
+      <View style={styles.info}>
+        <Text style={styles.degree}>{heading}°</Text>
+        <Text style={styles.direction}>{info.dir}</Text>
+        <Text style={styles.vastu}>{info.text}</Text>
+
+        {location && (
+          <>
+            <Text style={styles.location}>
+              Latitude: {location.coords.latitude.toFixed(5)}
+            </Text>
+            <Text style={styles.location}>
+              Longitude: {location.coords.longitude.toFixed(5)}
+            </Text>
+          </>
+        )}
+      </View>
+
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
+  container: {
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
-    gap: 8,
+    backgroundColor: '#f8fafc',
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+
+  card: {
+    width: 340,
+    height: 340,
+    borderRadius: 170,
+    overflow: 'hidden',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
+
+  compass: {
+    width: 300,
+    height: 300,
+    borderRadius: 150,
+    resizeMode: 'cover',
+  },
+
+  needle: {
     position: 'absolute',
+    width: 110,
+    height: 300,
+    resizeMode: 'contain',
+  },
+
+  centerDot: {
+    width: 14,
+    height: 14,
+    borderRadius: 7,
+    backgroundColor: '#000',
+    position: 'absolute',
+  },
+
+  info: {
+    marginTop: 30,
+    alignItems: 'center',
+    paddingHorizontal: 20,
+  },
+
+  degree: {
+    fontSize: 40,
+    fontWeight: 'bold',
+  },
+
+  direction: {
+    fontSize: 24,
+    color: 'green',
+    marginTop: 5,
+  },
+
+  vastu: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginTop: 8,
+  },
+
+  location: {
+    fontSize: 13,
+    color: 'gray',
+    marginTop: 5,
   },
 });
